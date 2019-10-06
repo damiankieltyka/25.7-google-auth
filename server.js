@@ -5,11 +5,6 @@ var config = require('./config');
 var app = express();
 var googleProfile = {};
 
-app.set('view engine', 'pug');
-app.set('views', './views');
-app.use(passport.initialize());
-app.use(passport.session());
-
 passport.serializeUser(function(user, done) {
     done(null, user);
 });
@@ -31,9 +26,14 @@ passport.use(new GoogleStrategy({
     }
 ));
 
+app.set('view engine', 'pug');
+app.set('views', './views');
+app.use(passport.initialize());
+app.use(passport.session());
+
 //app routes
 app.get('/', function(req, res){
-    res.render('index', { user: req.user });
+    res.render('welcome', { user: req.user });
 });
 
 app.get('/logged', function(req, res){
